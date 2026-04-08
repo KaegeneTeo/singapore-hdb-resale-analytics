@@ -41,3 +41,24 @@
 
 - If you shut down your computer, just repeat steps 1 and 4 (and 2 if you update the CSV).
 - The database persists in the `pgdata` Docker volume.
+
+---
+
+## Commit Message Conventions
+
+Use the following types for your commit messages (Conventional Commits):
+
+- **feat:**     A new feature (e.g. `feat: add dashboard tab for map`)
+- **fix:**      A bug fix (e.g. `fix: correct price calculation logic`)
+- **docs:**     Documentation only changes (e.g. `docs: update README with setup steps`)
+- **style:**    Changes that do not affect meaning (whitespace, formatting, etc.)
+- **refactor:** Code change that neither fixes a bug nor adds a feature (e.g. `refactor: simplify data pipeline`)
+- **perf:**     Performance improvement (e.g. `perf: speed up CSV loading`)
+- **test:**     Adding or correcting tests (e.g. `test: add test for transform_hdb_data`)
+- **chore:**    Maintenance tasks (e.g. `chore: update dependencies`)
+
+Example:
+```
+feat: add support for remaining_lease derivation
+fix: handle missing values in combine script
+```
