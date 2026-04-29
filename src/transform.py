@@ -50,6 +50,14 @@ def transform_hdb_data(df):
     return df
 
 if __name__ == "__main__":
-    df = pd.read_parquet(RAW_PATH)
+    if RAW_PATH.exists():
+        df = pd.read_parquet(RAW_PATH)
+    else:
+        csv_path = Path("data/raw/hdb_resale_raw.csv")
+        if csv_path.exists():
+            print("Parquet file not found, reading from CSV instead...")
+            df = pd.read_csv(csv_path)
+        else:
+            raise FileNotFoundError("Neither Parquet nor CSV raw data file found in data/raw/.")
     df_clean = transform_hdb_data(df)
     print(f"Transformed data: {len(df_clean)} rows. Saved to {PROC_PATH}.")

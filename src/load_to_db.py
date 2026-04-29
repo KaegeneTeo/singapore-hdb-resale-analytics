@@ -14,7 +14,7 @@ DB_PARAMS = dict(
     host=os.getenv("MYSQL_HOST", "localhost"),
     port=int(os.getenv("MYSQL_PORT", "3306")),
 )
-CSV_PATH = "../data/raw/hdb_resale_raw.csv"
+CSV_PATH = str(Path(__file__).parent.parent / "data" / "raw" / "hdb_resale_raw.csv")
 TABLE_NAME = "hdb_resale"
 
 
@@ -74,12 +74,10 @@ def main():
     # Reconnect for actual loading
     conn = mysql.connector.connect(**DB_PARAMS)
     cur = conn.cursor()
-    conn = mysql.connector.connect(**DB_PARAMS)
-    cur = conn.cursor()
-    cur.execute(CREATE_TABLE_SQL)
+    # Drop table if exists for a clean upload
+    cur.execute(f"DROP TABLE IF EXISTS {TABLE_NAME};")
     conn.commit()
-    # Clear table before loading
-    cur.execute(f"TRUNCATE TABLE {TABLE_NAME};")
+    cur.execute(CREATE_TABLE_SQL)
     conn.commit()
     # Insert data with error handling
     records = df.where(pd.notnull(df), None).values.tolist()
